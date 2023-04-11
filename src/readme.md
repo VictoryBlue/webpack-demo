@@ -98,3 +98,26 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 ### 清理/dist 文件夹
 
 每次构建前清理/dist 文件夹。可以减少发布的文件。
+
+## 开发环境
+
+### 查找出问题的源文件
+
+配置插件 HtmlWebpackPlugin
+
+### 热加载
+
+```
+npm install --save-dev webpack-dev-server
+```
+
+```
+ devServer: {
+    static: './dist',
+  },
+  optimization: {
+  runtimeChunk: 'single',
+},
+```
+
+也就是说之后我们 npm run start 将在我们前端启动一个服务器，帮我们模拟上线后的环境，默认的端口是 8080
