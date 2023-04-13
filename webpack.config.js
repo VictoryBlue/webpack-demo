@@ -1,5 +1,5 @@
 const path = require('path');
-
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 module.exports = {
   // entry: './src/index.js',
   mode: 'development',
@@ -9,19 +9,26 @@ module.exports = {
     // 解决重复依赖
     index: {
       import: './src/index.js',
-      dependOn: 'shared',
+      // dependOn: 'shared',
     },
     another: {
       import: './src/another-module.js',
-      dependOn: 'shared',
+      // dependOn: 'shared',
     },
-    shared: 'lodash',
+    // shared: 'lodash',
   },
+  plugins: [
+    new HtmlWebpackPlugin({
+      title: '代码分离',
+    }),
+  ],
   output: {
     filename: '[name].bundle.js',
     path: path.resolve(__dirname, 'dist'),
   },
   optimization: {
-    runtimeChunk: 'single',
+    splitChunks: {
+      chunks: 'all',
+    },
   },
 };

@@ -99,13 +99,25 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 每次构建前清理/dist 文件夹。可以减少发布的文件。
 
+```
+  output: {
+     filename: '[name].bundle.js',
+     path: path.resolve(__dirname, 'dist'),
+    clean: true,
+   },
+```
+
+### 生成 index.html 而非手动配置
+
+配置插件 HtmlWebpackPlugin
+
 ## 开发环境
 
 配置 webpack.config.js mode: 'development',
 
 ### 查找出问题的源文件
 
-配置插件 HtmlWebpackPlugin
+devtool source-maps
 
 ### 热加载
 
@@ -135,6 +147,31 @@ npm install --save-dev webpack-dev-server
 
 ### 防止重复
 
-多个 bundle.js 仍然可以导入重复的包，
+多个 bundle.js 仍然可以导入重复的包
+
+```
+  const path = require('path');
+
+  module.exports = {
+    mode: 'development',
+    entry: {
+      index: './src/index.js',
+      another: './src/another-module.js',
+    },
+    output: {
+      filename: '[name].bundle.js',
+      path: path.resolve(__dirname, 'dist'),
+    },
+   optimization: {
+     splitChunks: {
+       chunks: 'all',
+     },
+   },
+  };
+```
 
 ### 动态导入
+
+## other
+
+在 webpack 打包应用程序的时候，可以选择各种模块风格，包括 ES6，CommonJS，和 AMD。
